@@ -1,0 +1,1154 @@
+
+
+
+
+
+   
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+
+	<head>
+		<title>Siscomex Carga</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<meta http-equiv="CACHE-CONTROL" CONTENT="private, max-age=600"/>
+		<meta http-equiv="EXPIRES" CONTENT="600"/>
+		<title>Siscomex Carga</title>
+
+		<style type="text/css" media="print">
+		    img.noPrint {display: none;}
+		    select.noPrint {display: none;}
+		    div.noPrint {display: none;}
+		    ul.noPrint {display: none;}
+		</style>
+		<style type="text/css" media="all, print">
+		  @import url("./theme/tipografia.css");
+		  @import url("./theme/paleta.css");
+		</style>
+		<style type="text/css" media="screen">
+		  @import url("./theme/layout.css");
+		  @import url("./theme/principal.css");
+		  @import url("./theme/forms.css");
+		  @import url("./theme/menu.css");
+  		  @import url("./theme/siscarga.css");
+		</style>
+		<!-- serpro include [js=./js/siscarga.js] --><script type="text/javascript" language="JavaScript" src="./js/siscarga.js"></script>
+		
+		
+		
+	</head>
+
+<body onload="javascript:stripe()">
+
+	<!-- #inicio: faixa-amarela-governo-federal -->
+	
+	<div id="governo">
+	 <table class="governo" width="775" cellspacing="0" cellpadding="0" height="28" align="left" border="0">
+	  <tr valign="middle">
+<!-- 	   <td width="405" height="20" valign="middle" align="center" bgcolor="#FFCC00"> -->
+
+<!-- 	   </td> -->
+<!-- 	   <td colspan="2" valign="middle" align="center" bgcolor="#FFCC00"> -->
+<!-- 	    <select  name="sltVoce" title="Paginas do Governo Federal" class="noPrint" tabindex="1" onChange="comboChange(this,1)" size="1"> -->
+<!-- 	     <option value="&quot; &quot;" selected="selected">Destaques do Governo</option> -->
+<!-- 	     <option value="http://www.brasil.gov.br">Portal do Governo Federal</option> -->
+<!-- 	     <option value="http://www.e.gov.br">Portal de Servi&ccedil;os do Governo</option> -->
+<!-- 	     <option value="http://www.agenciabrasil.gov.br">Portal da Ag&ecirc;ncia de Not&iacute;cias</option> -->
+<!-- 	     <option value="http://www.previdenciasocial.gov.br/reforma/">Reforma da Previd&ecirc;ncia</option> -->
+<!-- 	     <option value="http://www.fomezero.gov.br">Programa Fome Zero</option> -->
+<!-- 	    </select> -->
+<!-- 	   </td> -->
+	   <td bgcolor="#FFCC00" width="186" height="20" valign="middle">
+	   </td>
+	  </tr>
+	 </table>
+	</div>
+	
+	<!-- #final: faixa-amarela-governo-federal -->
+
+
+<div id="geral">
+  <div id="layout">
+   <div id="cabecalho">
+	<h3>Siscomex Carga</h3>
+	<hr />
+   </div>
+   <h1> 
+	     Dados B&aacute;sicos do CE-Mercante N&ordm;
+		 <a href="./ConsultarDadosBasicosCEMercante.do?nrCE=182305211302131&hora=1698412002965">      
+            NumeroCeMercante
+         </a> 
+         &nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
+         
+          
+		    <a class="fonteh1" href="ConsultarDadosBasicosCEMercanteMenu.do">Voltar</a>
+          
+          
+        				
+        
+   </h1>
+
+  <div id="principal">
+   <div id="lateral">
+    <div class="caixa">
+     <div class="topo">
+     
+      <div class="conteudo">Itens marcados com (*) foram alterados de ofício
+	   <ul id="abas-dados-ce" class="noPrint">
+		 <li><a id="menu-itens-carga" href="#" onclick="toggle('menu-itens-carga','lista-itens-carga');return false">Lista de Itens</a></li>
+		 <li><a id="menu-houses" href="#" onclick="toggle('menu-houses','lista-houses');return false">Lista de Houses</a></li>
+	   </ul>
+       <div id="lista-itens-carga" class="scroll">
+	     
+
+
+
+
+<!-- 
+     Pagina:     consultar_dados_basicos_ce_indice_itens.jsp
+     Descrição:  Tela de Saída índice de Itens para a função Consultar Dados Básicos do CE-Mercante. 
+     Autor:      Danilo Félix
+     
+     Obs.: Fazer refatoração, pois essa jsp está com varias partes repetidas, com isso ela ficará fácil
+     de dar manutenção.
+-->
+
+<script>
+	function marcaDesmarcaCheckProt(){ 
+		var marcaDesmarcaProt = document.getElementById("marcaDesmarcaProt");
+   		for (i=0;i<document.forms[0].elements.length;i++) 
+	      	if(document.forms[0].elements[i].name == "protocolosAnalisar") 
+	         document.forms[0].elements[i].checked=marcaDesmarcaProt.checked 
+	} 
+
+	function marcaDesmarcaCheckItem(){
+		var marcaDesmarcaItem = document.getElementById("marcaDesmarcaItem"); 
+   		for (i=0;i<document.forms[0].elements.length;i++) 
+	      	if(document.forms[0].elements[i].name == "itensAnalisar") 
+	         document.forms[0].elements[i].checked=marcaDesmarcaItem.checked 
+	} 
+
+	function checkBoxNaoSelecionados()
+	{
+		var qtdChecks = 0;
+		var temCheck = false;
+		
+   		for (i=0;i<document.forms[0].elements.length;i++)
+   		{ 
+	      	if(document.forms[0].elements[i].name == "itensAnalisar") {
+	         if(document.forms[0].elements[i].checked)
+	          	temCheck = true;
+	      	}
+	      	
+	      	if(document.forms[0].elements[i].name == "protocolosAnalisar"){
+		         if(document.forms[0].elements[i].checked)
+		        	temCheck = true;
+	      	} 
+		}
+			
+		if( ! temCheck){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+		
+	}
+
+	function validaEntrada(){
+		var mensagem = "Selecione pelo menos um item para análise";
+		if ( checkBoxNaoSelecionados() ){
+			alert(mensagem);
+			return false;
+		}else{
+			document.forms['EfetuarDesbloqueioItemCargaEmLoteInformaAnaliseForm'].submit()
+			return true;
+		}
+	}
+	
+
+
+</script>
+
+
+
+
+
+<form name="EfetuarDesbloqueioItemCargaEmLoteInformaAnaliseForm" method="post" action="/carga-web/EfetuarDesbloqueioItemCargaEmLoteInformaAnalise.do">
+
+<input type="hidden" name="tipoCeMercante" value="12"/>
+
+<center>
+
+	
+
+
+
+
+
+
+	
+	
+	
+	
+		
+	
+
+
+
+
+
+
+	 
+
+  
+	
+
+
+
+
+	   
+	  <table cellspacing="0">
+		<caption style="font-size: 11px">Lista de Itens de Carga</caption>
+   
+	    <thead>
+	     <tr>
+	     	
+	     	
+	     	
+	       <th style="font-size: 10px">Tipo</th>
+	       <th style="font-size: 10px" colspan="2">No. do Item</th>
+	       <th style="font-size: 10px"></th>
+	       <th style="font-size: 10px">Id.Contêiner</th>
+	     </tr>
+	    </thead>
+		
+		<tbody>  
+	  	  
+	   	   <tr>
+		     		   	   
+			   
+			     <td>
+			     <img src="./images/pt_BR/ico_container.gif"></td>
+			     <td style="font-size: 9px">
+		              <a href="./ConsultarDetalhesItemCargaContainer.do?veioTelaBloqueio=N&inDecursoPrazo=&tipoBloqueio=00&motivoBloqueio=00&nrCE=182305211302131&nrItemCarga=0001&hora=1698412002965" />
+		                  0001
+						  
+		              </a>
+		         </td>
+		         <td style = 5px>      
+					
+	             </td> 
+
+	             <td>
+	                  
+
+		              
+		              	
+		              
+	             </td>
+	             <td align="center" style="font-size: 9px">
+             	   	 
+	             </td>
+		       				 
+			   				
+			   				 
+			   
+				 
+	   	   </tr>
+	      
+	   	   <tr>
+		     		   	   
+			   
+			     <td>
+			     <img src="./images/pt_BR/ico_container.gif"></td>
+			     <td style="font-size: 9px">
+		              <a href="./ConsultarDetalhesItemCargaContainer.do?veioTelaBloqueio=N&inDecursoPrazo=&tipoBloqueio=00&motivoBloqueio=00&nrCE=182305211302131&nrItemCarga=0002&hora=1698412002965" />
+		                  0002
+						  
+		              </a>
+		         </td>
+		         <td style = 5px>      
+					
+	             </td> 
+
+	             <td>
+	                  
+
+		              
+		              	
+		              
+	             </td>
+	             <td align="center" style="font-size: 9px">
+             	   	 
+	             </td>
+		       				 
+			   				
+			   				 
+			   
+				 
+	   	   </tr>
+	      
+	    </tbody>   	         
+	  </table>
+
+
+ 
+</center>
+</form><!-- serpro include [url=/WEB-INF/jsp/pt_BR/consultar_dados_basicos_ce_indice_itens_s1.jsp] -->
+       </div>
+       <div id="lista-houses" class="scroll">
+	     
+
+
+
+
+<!-- 
+     Pagina:     consultar_dados_basicos_ce_indice_houses.jsp
+     Descrição:  Tela de Saída de índice de houses para a função Consultar Dados Básicos do CE-Mercante (canto inferior esquerdo). 
+     Autor:      Danilo Félix
+-->
+
+<center>
+
+
+
+	
+
+
+</center><!-- serpro include [url=/WEB-INF/jsp/pt_BR/consultar_dados_basicos_ce_indice_houses_s1.jsp] -->
+	   </div> 
+      </div>
+     </div>
+     <div class="fechamento"> </div>
+    </div>
+   </div>
+   <div class="caixa" id="quadro">
+    <div class="topo">
+     <div class="conteudo">
+	   <!-- #inicio : conteúdo de acordo com a funcionalidade -->     
+          
+
+
+
+ 
+<!-- 
+     Pagina:     consultar_dados_basicos_ce_conteudo_s1.jsp
+     Descrição:  Tela de Saída principal para a função Consultar Dados Básicos do CE-Mercante (exibindo o grBloqueio). 
+     Autor:      Danilo Félix
+-->
+
+
+
+
+
+
+    
+
+	<!-- Se tem bloqueio, exibe ícone de destaque -->
+	
+    
+	    
+	    
+    
+    
+    <!-- Se tem historico de bloqueio , exibe ícone  -->
+    
+    
+    <!-- Se tem historico de retificação   --> 
+    
+    
+    <!-- Se tem historico de retificação e alteração de ofício  --> 
+    
+    
+    <!-- Se tem historico de alteração de ofício para o house  -->	
+    	
+    
+	<!-- inExisteRetificacao -->
+    
+    <!-- Fim inExisteRetificacao --> 
+
+	<!-- INÍCIO : AGRUPAMENTO MANIFESTO / CONHECIMENTO -->
+	
+	
+	
+	<p>
+	<a href="/carga-web/EmitirExtratoCEMercante.do?nrCE=182305211302131">Imprimir Extrato</a>
+	</p>
+	
+	
+	
+  	<h2>Manifesto/Conhecimento</h2>
+
+	<!-- grManifestos -->
+  		 
+
+  	
+
+		 <table width="100%"> 
+	  		
+
+			  
+			   	   
+		   	    <!--Na primeira passada do loop, se nrManifesto e <> "", então cria a linha para apresentar o cabeçalho da tabela --> 
+		   	    
+		   	       <thead>
+				   <tr>
+					 <th colspan=2>Número do Manifesto</th>
+					 <th>Porto / Terminal de Carregamento</th>
+					 <th>Porto / Terminal de Descarregamento</th>
+				   </tr>
+				   </thead> 
+		   	     
+
+		   	    <tr>
+				 <td align="center" colspan="2">
+					 	
+						
+			           
+				 
+					
+					
+						
+						
+				      <a href="/carga-web/ConsultarManifestoMaritimoPorNumero.do?hora=1698412002965&amp;nrManifesto=1823501459664">Numero do Manifesto</a>
+					
+				 </td>
+				 <td align="left">
+				 	  
+				 	  	
+				 	  	
+				 	  	
+							
+				 	  		CNSHK&nbsp;-&nbsp;
+				      		SHEKOU
+				 	  	
+				 	  	
+				 	  	
+				 	  	
+				 	  
+				 </td>
+				 <td align="left">   
+				        
+				 	  	
+				 	  	
+				 	  	
+				 	  	
+				 	  	
+				 	  	
+				 	  					 	  	
+				 	  	
+				 	  		
+					 	  		BRNVT&nbsp;/&nbsp;
+					      		BRNVT001&nbsp;-&nbsp;
+					      		TERMINAL PORTONAVE - NAVEGANTES - SC
+				      		
+				 	  	
+				 	  	
+				 	  
+				 </td>
+			   	</tr>
+                   
+              
+                   
+			
+			    
+		 </table>
+        
+    
+
+   <!-- Fim grManifestos -->
+   
+   
+   
+   <!-- grManifestos Retificação-->
+   <br>
+  		
+
+  	
+
+   <!-- Fim grManifestos Retificação-->
+   <dl>
+    
+   <!-- cdTipoConhecimento, nmTipoConhecimento -->       
+   <dt>Tipo de Conhecimento :</dt>
+   <dd>HBL</dd>
+
+   
+   <!-- Fim cdTipoConhecimento, nmTipoConhecimento -->      
+
+   <!-- inBlServico, nrCeOriginalBlServico -->  
+   
+   
+      
+           
+           
+   
+      <dt>BL de Serviço :</dt>
+      <dd>N</dd>
+	   
+   
+
+   
+           
+           
+   
+   <!-- Fim inBlServico, nrCeOriginalBlServico -->
+   
+   
+   
+   
+   <!-- nrCEMaster -->
+   
+
+      <dt>No. CE-MERCANTE Master vinculado :</dt>
+      <dd>
+      
+      
+      
+      
+           <img width="15" height="15" src="./images/pt_BR/ico_container_desunitizado_pequeno.png" title="CE GENERICO(MBL) JÁ POSSUI AGREGADO COM PRESENÇA DE CARGA E/OU VINCULADO A DESPACHO">
+      
+      
+     	
+  	    <a href="./ConsultarDadosBasicosCEMercante.do?nrCE=182305210833638&hora=1698412002965">  
+          182305210833638
+        </a>
+      </dd>
+   
+
+   
+   <!-- Fim nrCEMaster -->
+   
+   
+   
+    
+
+   <!-- dtEmissaoCE -->
+   <dt>Data de Emissão do BL :</dt>
+   <dd>02/08/2023</dd>
+   
+   
+
+   
+   <!-- Fim dtEmissaoCE -->
+
+   </dl>
+
+   <!-- cdTipoConhecimento, inInconsistenciaMasterPeso, inInconsistenciaMasterFrete, inInconsistenciaMasterCubagem  -->
+   
+
+   
+   <!-- Fim cdTipoConhecimento, inInconsistenciaMasterPeso, inInconsistenciaMasterFrete, inInconsistenciaMasterCubagem  -->       
+   
+<!-- FINAL : AGRUPAMENTO MANIFESTO / CONHECIMENTO -->
+
+<!-- INÍCIO : AGRUPAMENTO EMBARCADOR -->
+
+    <h2>Embarcador</h2>
+
+	<dl>
+    <!-- cdCategoriaCarga, nrCpfCnpjEmbarcador, nmCpfCnpjEmbarcador, txIdentificaEmbarcador  -->        
+    
+        
+    
+
+     
+
+	    <dt>Dados Complementares do Embarcador :</dt>
+	    <dd>Complementar embarcador</dd>
+        
+
+     
+
+	<!-- Fim cdCategoriaCarga, nrCpfCnpjEmbarcador, nmCpfCnpjEmbarcador, txIdentificaEmbarcador  -->
+	</dl>
+
+<!-- FINAL : AGRUPAMENTO EMBARCADOR -->
+
+<!--
+Perfis com Nível de Acesso 3 e 4 não visualizam dados de Consignatário
+-->
+
+<!-- INÍCIO : AGRUPAMENTO CONSIGNATÁRIO -->
+
+    <h2>Consignatário</h2> 
+
+	<dl>
+	
+	<!-- inPracaEntregaExterior, cdPaisEntregaCarga, nmPaisEntregaCarga -->
+
+    
+
+    
+    
+    <!-- inBLOrdem -->
+    <dt>BL a Ordem :</dt>
+    <dd>
+       
+       
+        N
+       
+    </dd>
+
+    
+    <!-- Fim inBLOrdem -->
+    
+    <!-- inConsignatarioEstrangeiro, cdConsignatario, nmConsignatario -->        
+    
+
+        <dt>CNPJ/CPF :</dt>
+        <dd>99999999999999</dd>
+
+        
+
+        <dt>Razão Social/Nome :</dt>
+        <dd>Consignatario</dd>
+
+        
+
+   
+    
+    <!-- Em: 25/07/2008 Por: J Eduardo obj: Quando trocava estrangeiro por Nacional na retificação, não mostrava o novo nacional -->       
+       
+   <!-- Fim Em: 25/07/2008 Por: J Eduardo -->
+    
+   <!-- inConsignatarioEstrangeiro, nuPassaporteEstrangeiro, noConsignatEstrangeiro -->        
+   
+   <!-- Fim inConsignatarioEstrangeiro, nuPassaporteEstrangeiro, noConsignatEstrangeiro -->
+
+
+   <!-- Em: 25/07/2008 Por: J Eduardo obj: Quando trocava de Nacional par estrangeiro na retificação, não mostrava o novo estrangeiro -->  
+   <!-- inConsignatarioEstrangeiro, nuPassaporteEstrangeiro, noConsignatEstrangeiro -->        
+   
+   <!-- Fim Em: 25/07/2008 Por: J Eduardo -->
+
+   <!-- txIdentificaConsignatario -->         
+   <dt>Dados Complementares do Consignatário :</dt>
+   <dd>Complmento consginatário</dd>
+
+   
+   <!-- Fim txIdentificaConsignatario -->
+   
+   <!-- cdConsignatarioAnteriorEndosso  -->
+   	
+
+           
+
+   	
+
+           
+   <!-- cdConsignatarioAnteriorEndosso  -->
+   </dl>
+
+<!-- FINAL : AGRUPAMENTO CONSIGNATÁRIO -->
+
+
+<!--
+Perfis com Níveis de Acesso 3 e 4 não visualizam dados de Notify Part
+-->
+
+<!-- INÍCIO : AGRUPAMENTO PARTE A  SER NOTIFICADA -->
+   <h2>Parte a ser Notificada</h2>
+   <dl>
+   <!-- nrCpfCnpjNotificado -->
+   <dt>CNPJ/CPF :</dt>
+   <dd>999999999999999</dd>
+
+   
+   <!-- Fim nrCpfCnpjNotificado -->       
+
+   <!-- nmCpfCnpjNotificado -->
+   <dt>Razão Social/Nome :</dt>
+   <dd>Notificada</dd>
+
+   
+   <!-- Fim nmCpfCnpjNotificado -->
+
+   <!-- txIdentificaNotificacao -->
+   <dt>Dados Complementares :</dt>
+   <dd>9999999999999</dd>
+
+   
+   <!-- Fim txIdentificaNotificacao -->
+   </dl>
+
+<!-- FINAL : AGRUPAMENTO PARTE A  SER NOTIFICADA -->
+
+
+
+<!-- INÍCIO : AGRUPAMENTO TRANSPORTADOR OU REPRESENTANTE -->
+   
+   
+   
+     
+   
+   
+     
+       
+   	    <h2>Transportador ou representante:</h2>
+     	  <dl>
+       	<!-- CNPJ -->
+     	  <dt>CNPJ :</dt>
+     	  <dd>99999999999999</dd>         
+        	<!-- Fim CNPJ -->       
+        	<!-- Razão Social -->
+        	<dt>Razão Social :</dt>
+        	<dd>Transportadora</dd>
+   	    <!-- Fim Razão Social -->
+        </dl>
+       
+     
+    
+   
+   
+<!-- FINAL : AGRUPAMENTO TRANSPORTADOR OU REPRESENTANTE -->
+
+
+<!-- INÍCIO : AGRUPAMENTO PROCEDÊNCIA/DESTINO DA CARGA -->
+
+   <h2>Procedência e Destino da Carga</h2>
+
+   <dl>
+   <!-- nrBlConhecimento -->
+   <dt>Número BL do Conhecimento de Embarque Original :</dt>
+   <dd>99999999999999999</dd>
+
+   
+   <!-- Fim nrBlConhecimento -->
+
+   <!-- cdPortoOrigem, noPortoOrigem  -->
+   <dt>Porto de Origem :</dt>
+   <dd>CNSHK&nbsp;-&nbsp;SHEKOU</dd>
+
+   
+   <!-- Fim cdPortoOrigem, noPortoOrigem  -->       
+
+   <!-- noPaisProcedenciaCarga  -->       	   
+   <dt>País de Procedência :</dt>
+   <dd>CHINA</dd>
+
+   
+   <!-- Fim noPaisProcedenciaCarga  -->
+
+   <!-- cdCategoriaCarga, noPaisDestFinal -->
+   
+   <!-- Fim cdCategoriaCarga, noPaisDestFinal -->
+
+   <!-- cdCategoriaCarga, cdUFDestinoCarga -->        
+   
+        <dt>UF de Destino Final :</dt>
+        <dd>SC</dd>
+        
+    
+   <!-- Fim cdCategoriaCarga, cdUFDestinoCarga -->        
+
+   <!-- cdPortoDestino, noPortoDestino -->	           
+   <dt>Porto de Destino Final :</dt>
+   <dd>BRNVT&nbsp;-&nbsp;NAVEGANTES</dd>
+
+   
+   <!-- Fim cdPortoDestino, noPortoDestino -->
+
+
+<!-- grDocDespacho.nrDocDespacho, grDocDespacho.cdDocDespacho -->
+
+
+
+
+
+   <dt>Número/Tipo do Documento de Despacho</dt>
+   <dd>
+   
+
+		 
+			
+			
+			
+				<a href="javascript:HelpConsultarDetalhesDI('2317998715')">Numero Documento de despacho</a> 
+			
+			
+			
+			
+			
+			
+			
+			
+         
+	
+
+ 	</dd>
+	        
+	<!-- Fim grDocDespacho.nrDocDespacho, grDocDespacho.cdDocDespacho -->
+</dl>
+	  
+<!-- FINAL : AGRUPAMENTO PROCEDÊNCIA/DESTINO DA CARGA -->
+<!--
+Perfis com Nível de Acesso 4 não visualizam dados de Mercadoria
+-->
+
+<!-- INÍCIO : AGRUPAMENTO MERCADORIA -->
+
+   <h2>Mercadoria</h2>
+
+   <dl>
+   <!-- txDescricaoMercadoria1  -->	   
+   <dt>Descrição 1 :</dt>
+   <dd>1800 CARTONS CONTAIN COMMODE CHAIR</dd>
+
+   
+   <!-- Fim txDescricaoMercadoria1  -->	   
+
+   <!-- txDescricaoMercadoria2  -->
+   <dt>Descrição 2 :</dt>
+   <dd></dd>
+
+   
+   <!-- Fim txDescricaoMercadoria2  -->       
+
+   <!-- pbCargaKg -->
+   <dt>Peso Bruto da Carga (Kg) :</dt>
+   <dd>13.302,000</dd>
+   
+   <!-- Fim pbCargaKg -->
+   
+   <!-- vlCubagemM3  -->
+   <dt>Cubagem (em m3) :</dt>
+   <dd>133,400</dd>
+   
+   <!-- Fim vlCubagemM3  -->
+
+   <!-- txCategoriaCarga -->        
+   <dt>Categoria :</dt>
+   <dd>IMPORTADA</dd>
+   
+   <!-- Fim txCategoriaCarga -->
+   
+   <!-- txSitucaoCarga -->
+   <dt>Situação :</dt>
+      <dd>
+	      	
+							<a href="./ConsultarEntregaDeCarga.do?idRadio=DI&nrDeclaracao=2317998715&linkConsulta=S">ENTREGUE &nbsp; 14/09/2023</a>  
+							
+							<!-- Mudança em 30/06/2017 	 Entrega por Autorização após redisponibilização-->
+							
+	  </dd>
+   <!-- Fim txSitucaoCarga -->
+   
+   <!-- cdPortoAtracacao, noPortoAtracacao -->
+   
+   <!-- Fim cdPortoAtracacao, noPortoAtracacao -->
+
+   </dl>
+<!-- FINAL : AGRUPAMENTO MERCADORIA -->
+
+
+<!-- INÍCIO : AGRUPAMENTO FRETE/DESPESAS DE TRANSPORTE. -->
+
+<!--
+Perfis com Níveis de Acesso 2, 3 e 4 não visualizam dados de Frete
+-->
+
+
+   <h2>Frete e Despesas de Transporte</h2>
+	
+   <dl>
+   <!-- cdRecolhimentoFrete, noRecolhimentoFrete -->
+   <dt>Recolhimento de Frete :</dt>
+   <dd>COLLECT</dd>
+   
+   <!-- Fim cdRecolhimentoFrete, noRecolhimentoFrete -->
+
+   <!-- qtVeiculosTranportadores  -->	   
+   <!-- Dado removido da tela de saída  conforme ocorrência 293 -->	   
+   <!-- Fim qtVeiculosTranportadores  -->	   
+
+   <!-- cdModalidadeFrete, noModalidadeFrete -->
+   <dt>Modalidade de Frete :</dt>
+   <dd>HH&nbsp;-&nbsp;HOUSE TO HOUSE</dd>
+    
+   <!-- Fim cdModalidadeFrete, noModalidadeFrete -->
+
+   <!-- cdMoedaFrete, noMoedaFrete -->	
+   <dt>Moeda do Frete :</dt>
+   <dd>220&nbsp;-&nbsp;DOLAR DOS EUA</dd>
+
+   
+   <!-- Fim cdMoedaFrete, noMoedaFrete -->
+
+   <!-- vlFrete -->	   
+   <dt>Valor do Frete Básico :</dt>
+   <dd>5.700,00</dd>
+   
+   <!-- Fim vlFrete -->	
+
+   <!-- informacFrete  -->
+   	
+   
+	 <dt>Componentes do Frete :</dt>
+	 <dd>
+	   <table width="100%">
+	    <thead>
+	      <tr>
+		    <th>Componente da Taxa de Frete</th>
+		    <th>Moeda</th>
+		    <th>Valor</th>
+		    <th>Recolhimento</th>	
+	      </tr>
+	    </thead>
+	    <tbody>
+	  	  
+  	   	    
+			   <tr>
+				 <td align="left">
+			      017&nbsp;-&nbsp;
+			      16ª CAPATA
+				 </td>
+				 <td align="left">
+			      790&nbsp;-&nbsp;
+			      REAL/BRASIL
+				 </td>
+				 <td align="center">
+				  1.612,00
+				 </td>
+				 <td align="center">
+			      
+			      					      
+					 COLLECT
+			      					      
+				 </td>
+		   	   </tr>
+            
+	      
+	    </tbody>
+	   </table>
+     </dd>  
+   
+
+   	
+   
+   <!-- Fim informacFrete  -->
+   </dl>
+
+
+<!-- FINAL : AGRUPAMENTO FRETE/DESPESAS DE TRANSPORTE -->
+
+
+<!-- INÍCIO : AGRUPAMENTO TRANSBORDOS NO EXTERIOR -->
+
+
+   <!-- grPortosTransbordoExterior  -->
+   	
+   	
+
+   
+   
+
+   
+
+   
+
+   
+<!-- FINAL : AGRUPAMENTO TRANSBORDOS NO EXTERIOR -->
+
+<!-- INÍCIO : AGRUPAMENTO SHIP'S CONVENIENCE -->
+
+   	
+   	
+ 	   
+   
+   
+
+   
+
+   
+
+<!-- FINAL : AGRUPAMENTO SHIP'S CONVENIENCE -->	
+
+<!-- INÍCIO : AGRUPAMENTO CARGA BLOQUEADA -->
+
+   <!-- grBloqueio -->
+   
+	
+	     
+	 
+    
+   <!-- Fim grBloqueio --> 
+		   
+<!-- FINAL : AGRUPAMENTO CARGA BLOQUEADA -->
+
+<!-- INÍCIO : AGRUPAMENTO OBSERVAÇÕES -->		           
+
+   
+   
+
+   
+
+   
+
+<!-- FINAL : AGRUPAMENTO OBSERVAÇÕES -->
+
+<!-- INÍCIO : complemento do primeiro scriptlet - no futuro também deve virar taglib -->
+<!-- serpro include [url=/WEB-INF/jsp/pt_BR/consultar_dados_basicos_ce_conteudo_s1.jsp] -->
+       <!-- #final : conteúdo de acordo com a funcionalidade -->       
+       	   <!-- #inicio : conteúdo de acordo com a funcionalidade -->     
+          
+
+
+
+
+	
+	<!-- serpro include [url=/WEB-INF/jsp/pt_BR/consultar_dados_basicos_ce_conteudo_s1_parte2.jsp] -->
+       <!-- #final : conteúdo de acordo com a funcionalidade -->       
+       
+	   <!-- #inicio : código controlador do menu - controleMenu.jsp -->
+     	  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<div style="display:none">
+	<form name="frmPopup">
+		<input name="check" type="checkbox" class="checkbox" value="on" onclick="ligaDesligaMenu(event)">
+		<input name="status" type="hidden" value="1">
+	</form>
+</div>
+
+
+
+<!-- Scripts fixos na página para controle do menu -->
+<script language="JavaScript" type="text/javascript">
+	peXt = (navigator.userAgent.indexOf("Opera")!=-1 && document.getElementById) ? ((document.body.insertAdjacentHTML) ? "mo" : "op") : (navigator.userAgent.indexOf("Konqueror")!=-1 && document.getElementById) ? "ko" : (document.all) ? "ie" : (document.layers) ? "nn" : (!document.all && document.getElementById) ? "mo" : "";
+	if (peXt!="")
+		document.write('<scr'
+		+'ipt language="JavaScript" src="js/menu'+peXt+'1.js"></scr'+'ipt>');
+</Script>
+
+
+
+<script type="text/javascript">
+	if (peXt == 'mo'){
+		linha1 = "pmiurl = new Array('pop0submain','pop1submain','pop2submain','pop3submain','pop4submain','pop5submain','pop6submain','pop7submain','pop8submain','ConsultarCargaConsignatarioMenu.do','pop10submain','ConsultarPendenciaFreteMenu.do','pop12submain','pop13submain','pop14submain','pop15submain','EmitirExtratoManifestoMenu.do','EmitirExtratoCEMercanteMenu.do','ConsultarAutoInfracaoMenu.do','ConsultarUmaEscalaMenu.do','ConsultarEscalasMenu.do','ConsultarDadosBasicosCEMercanteMenu.do','ExtrairCEIntervenientesMenu.do','ConsultarManifestoMaritimoPorNumeroMenu.do','ConsultarRotaExcecaoMenu.do','ConsultarEntregaDeCargaMenu.do','ConsultarAutorizacaoEntregaCargaSemDiDsiMenu.do','ConsultarEntregaCargaSemDiDsiMenu.do','ConsultarEntregaMercadoriaNacionalMenu.do')";
+		linha2 = "pmact = new Array('9','9','9','9','9','9','9','9','9','1','9','1','9','9','9','9','1','1','1','1','1','1','1','1','1','1','1','1','1')";
+		xp = '"';
+		linha3 = "pmimsa = new Array('popMain',ccf0[0]+';width:259px"+xp+"','','popMaini',ccf1[0]+ccf2[0]+';width:257px"+xp+"','','menuHitem','"+xp+" style="+xp+"position:relative;left:0px;top:0px;text-align:left;background-color:'+pmclr[0][4]+';color:'+pmclr[0][5]+';font-family: Verdana;font-size:12px;font-weight: bold;font-style:normal;cursor: move"+xp+" onmousedown="+xp+"popdragstart(event)"+xp+"onmouseup="+xp+"popdragend();event.cancelBubble = true"+xp+" '+pmhl,pmht+cf1,cf5+'0',ccf1[0]+cfI+cf3,'Consultas<IMG Id="+xp+"'+cf5+'0arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'1',ccf1[0]+cfI+cf3,'Cadastros<IMG Id="+xp+"'+cf5+'1arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'2',ccf1[0]+cfI+cf3,'Pendência de Frete<IMG Id="+xp+"'+cf5+'2arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'3',ccf1[0]+cfI+cf3,'Entrega de Carga<IMG Id="+xp+"'+cf5+'3arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'4',ccf1[0]+cfI+cf3,'Extratos<IMG Id="+xp+"'+cf5+'4arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'5',ccf1[0]+cfI+cf3,'Notificação de Lançamento Eletrônico<IMG Id="+xp+"'+cf5+'5arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+ccf3[0]+cf1+cf1+cf1,'pop0submain',ccf0[0]+';width:178px"+xp+"','','pop0submaini',ccf1[0]+ccf2[0]+';width:176px"+xp+"','',cf5+'6',ccf1[0]+cfI+cf3,'Escalas<IMG Id="+xp+"'+cf5+'6arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'7',ccf1[0]+cfI+cf3,'CE-Mercante<IMG Id="+xp+"'+cf5+'7arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'8',ccf1[0]+cfI+cf3,'Manifestos Marítimos<IMG Id="+xp+"'+cf5+'8arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'9',ccf1[0]+cfI+cf3,'Carga por Consignatário'+cf1+cf1+cf1,'pop1submain',ccf0[0]+';width:309px"+xp+"','','pop1submaini',ccf1[0]+ccf2[0]+';width:307px"+xp+"','',cf5+'10',ccf1[0]+cfI+cf3,'Rota de Exceção<IMG Id="+xp+"'+cf5+'10arrow"+xp+" style="+xp+"position:absolute;left:295px;top:4px'+xp+' '+ccf3[0]+cf1+cf1+cf1,'pop2submain',ccf0[0]+';width:95px"+xp+"','','pop2submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'11',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1,'pop3submain',ccf0[0]+';width:308px"+xp+"','','pop3submaini',ccf1[0]+ccf2[0]+';width:306px"+xp+"','',cf5+'12',ccf1[0]+cfI+cf3,'Entregar por DI/DSI Eletrônica<IMG Id="+xp+"'+cf5+'12arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'13',ccf1[0]+cfI+cf3,'Autorizar Entrega por DSI Formulário/Processo<IMG Id="+xp+"'+cf5+'13arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'14',ccf1[0]+cfI+cf3,'Entregar por DSI Formulário/Processo<IMG Id="+xp+"'+cf5+'14arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+ccf3[0]+cf1,cf5+'15',ccf1[0]+cfI+cf3,'Entregar Carga Nacional<IMG Id="+xp+"'+cf5+'15arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+ccf3[0]+cf1+cf1+cf1,'pop4submain',ccf0[0]+';width:322px"+xp+"','','pop4submaini',ccf1[0]+ccf2[0]+';width:320px"+xp+"','',cf5+'16',ccf1[0]+cfI+cf3,'Emitir Extrato Manifesto'+cf1,cf5+'17',ccf1[0]+cfI+cf3,'Emitir Extrato CE'+cf1+cf1+cf1,'pop5submain',ccf0[0]+';width:313px"+xp+"','','pop5submaini',ccf1[0]+ccf2[0]+';width:311px"+xp+"','',cf5+'18',ccf1[0]+cfI+cf3,'Consulta Notificação de Lançamento Eletrônico'+cf1+cf1+cf1,'pop6submain',ccf0[0]+';width:191px"+xp+"','','pop6submaini',ccf1[0]+ccf2[0]+';width:189px"+xp+"','',cf5+'19',ccf1[0]+cfI+cf3,'Consultar Escala'+cf1,cf5+'20',ccf1[0]+cfI+cf3,'Pesquisar por Parâmetros'+cf1+cf1+cf1,'pop7submain',ccf0[0]+';width:215px"+xp+"','','pop7submaini',ccf1[0]+ccf2[0]+';width:213px"+xp+"','',cf5+'21',ccf1[0]+cfI+cf3,'Consultar Dados Básicos'+cf1,cf5+'22',ccf1[0]+cfI+cf3,'Extrair CE para Intervenientes'+cf1+cf1+cf1,'pop8submain',ccf0[0]+';width:213px"+xp+"','','pop8submaini',ccf1[0]+ccf2[0]+';width:211px"+xp+"','',cf5+'23',ccf1[0]+cfI+cf3,'Consultar Manifesto Marítimo '+cf1+cf1+cf1,'pop10submain',ccf0[0]+';width:95px"+xp+"','','pop10submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'24',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1,'pop12submain',ccf0[0]+';width:95px"+xp+"','','pop12submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'25',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1,'pop13submain',ccf0[0]+';width:95px"+xp+"','','pop13submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'26',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1,'pop14submain',ccf0[0]+';width:95px"+xp+"','','pop14submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'27',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1,'pop15submain',ccf0[0]+';width:95px"+xp+"','','pop15submaini',ccf1[0]+ccf2[0]+';width:93px"+xp+"','',cf5+'28',ccf1[0]+cfI+cf3,'Consultar'+cf1+cf1+cf1)";
+	} else {
+		linha1 = "pmiurl = new Array('pop0submain','pop1submain','pop2submain','pop3submain','pop4submain','pop5submain','pop6submain','pop7submain','pop8submain','ConsultarCargaConsignatarioMenu.do','ConsultarUmaEscalaMenu.do','ConsultarEscalasMenu.do','ConsultarDadosBasicosCEMercanteMenu.do','ExtrairCEIntervenientesMenu.do','ConsultarManifestoMaritimoPorNumeroMenu.do','pop10submain','ConsultarRotaExcecaoMenu.do','ConsultarPendenciaFreteMenu.do','pop12submain','pop13submain','pop14submain','pop15submain','ConsultarEntregaDeCargaMenu.do','ConsultarAutorizacaoEntregaCargaSemDiDsiMenu.do','ConsultarEntregaCargaSemDiDsiMenu.do','ConsultarEntregaMercadoriaNacionalMenu.do','EmitirExtratoManifestoMenu.do','EmitirExtratoCEMercanteMenu.do','ConsultarAutoInfracaoMenu.do')";
+		linha2 = "pmact = new Array('9','9','9','9','9','9','9','9','9','1','1','1','1','1','1','9','1','1','9','9','9','9','1','1','1','1','1','1','1')";
+		xp = '"';
+		linha3 = "pmimsa = new Array('popMain',cf2+';width:259"+xp+"','','popMaini',cf3+cf4+';width:257"+xp+"','','menuHitem','"+xp+" style="+xp+"position: relative;left: 0px;top: 0px;text-align: left;background-color:'+pmclr[4]+';color:'+pmclr[5]+';font-family: Verdana;font-size:12px;font-weight: bold;font-style:normal;cursor: move"+xp+" onmousedown="+xp+"popdragstart()"+xp+" '+pmhl,pmht+cf1,cf9+'0',cf3+cf5,'Consultas<IMG Id="+xp+"'+cf9+'0arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1,cf9+'1',cf3+cf5,'Cadastros<IMG Id="+xp+"'+cf9+'1arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1,cf9+'2',cf3+cf5,'Pendência de Frete<IMG Id="+xp+"'+cf9+'2arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1,cf9+'3',cf3+cf5,'Entrega de Carga<IMG Id="+xp+"'+cf9+'3arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1,cf9+'4',cf3+cf5,'Extratos<IMG Id="+xp+"'+cf9+'4arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1,cf9+'5',cf3+cf5,'Notificação de Lançamento Eletrônico<IMG Id="+xp+"'+cf9+'5arrow"+xp+" style="+xp+"position:absolute;left:245px;top:4px'+xp+' '+cf6+cf1+cf1+cf1,'pop0submain',cf2+';width:178"+xp+"','','pop0submaini',cf3+cf4+';width:176"+xp+"','',cf9+'6',cf3+cf5,'Escalas<IMG Id="+xp+"'+cf9+'6arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+cf6+cf1,cf9+'7',cf3+cf5,'CE-Mercante<IMG Id="+xp+"'+cf9+'7arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+cf6+cf1,cf9+'8',cf3+cf5,'Manifestos Marítimos<IMG Id="+xp+"'+cf9+'8arrow"+xp+" style="+xp+"position:absolute;left:164px;top:4px'+xp+' '+cf6+cf1,cf9+'9',cf3+cf5,'Carga por Consignatário'+cf1+cf1+cf1,'pop6submain',cf2+';width:191"+xp+"','','pop6submaini',cf3+cf4+';width:189"+xp+"','',cf9+'10',cf3+cf5,'Consultar Escala'+cf1,cf9+'11',cf3+cf5,'Pesquisar por Parâmetros'+cf1+cf1+cf1,'pop7submain',cf2+';width:215"+xp+"','','pop7submaini',cf3+cf4+';width:213"+xp+"','',cf9+'12',cf3+cf5,'Consultar Dados Básicos'+cf1,cf9+'13',cf3+cf5,'Extrair CE para Intervenientes'+cf1+cf1+cf1,'pop8submain',cf2+';width:213"+xp+"','','pop8submaini',cf3+cf4+';width:211"+xp+"','',cf9+'14',cf3+cf5,'Consultar Manifesto Marítimo '+cf1+cf1+cf1,'pop1submain',cf2+';width:309"+xp+"','','pop1submaini',cf3+cf4+';width:307"+xp+"','',cf9+'15',cf3+cf5,'Rota de Exceção<IMG Id="+xp+"'+cf9+'15arrow"+xp+" style="+xp+"position:absolute;left:295px;top:4px'+xp+' '+cf6+cf1+cf1+cf1,'pop10submain',cf2+';width:95"+xp+"','','pop10submaini',cf3+cf4+';width:93"+xp+"','',cf9+'16',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop2submain',cf2+';width:95"+xp+"','','pop2submaini',cf3+cf4+';width:93"+xp+"','',cf9+'17',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop3submain',cf2+';width:308"+xp+"','','pop3submaini',cf3+cf4+';width:306"+xp+"','',cf9+'18',cf3+cf5,'Entregar por DI/DSI Eletrônica<IMG Id="+xp+"'+cf9+'18arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+cf6+cf1,cf9+'19',cf3+cf5,'Autorizar Entrega por DSI Formulário/Processo<IMG Id="+xp+"'+cf9+'19arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+cf6+cf1,cf9+'20',cf3+cf5,'Entregar por DSI Formulário/Processo<IMG Id="+xp+"'+cf9+'20arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+cf6+cf1,cf9+'21',cf3+cf5,'Entregar Carga Nacional<IMG Id="+xp+"'+cf9+'21arrow"+xp+" style="+xp+"position:absolute;left:294px;top:4px'+xp+' '+cf6+cf1+cf1+cf1,'pop12submain',cf2+';width:95"+xp+"','','pop12submaini',cf3+cf4+';width:93"+xp+"','',cf9+'22',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop13submain',cf2+';width:95"+xp+"','','pop13submaini',cf3+cf4+';width:93"+xp+"','',cf9+'23',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop14submain',cf2+';width:95"+xp+"','','pop14submaini',cf3+cf4+';width:93"+xp+"','',cf9+'24',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop15submain',cf2+';width:95"+xp+"','','pop15submaini',cf3+cf4+';width:93"+xp+"','',cf9+'25',cf3+cf5,'Consultar'+cf1+cf1+cf1,'pop4submain',cf2+';width:322"+xp+"','','pop4submaini',cf3+cf4+';width:320"+xp+"','',cf9+'26',cf3+cf5,'Emitir Extrato Manifesto'+cf1,cf9+'27',cf3+cf5,'Emitir Extrato CE'+cf1+cf1+cf1,'pop5submain',cf2+';width:313"+xp+"','','pop5submaini',cf3+cf4+';width:311"+xp+"','',cf9+'28',cf3+cf5,'Consulta Notificação de Lançamento Eletrônico'+cf1+cf1+cf1)";		
+	}
+	document.write('<scr'+'ipt language="JavaScript" src="js/menu'+peXt+'2.js"></scr'+'ipt>');
+</script>
+
+<!-- serpro include [url=/WEB-INF/jsp/pt_BR/menu.jsp] -->
+   	   <!-- #final : código controlador do menu - controleMenu.jsp -->
+     </div>
+    </div>
+    <div class="fechamento"></div>
+   </div>
+  </div>
+  
+  <!-- inicio: menu principal -->
+	<div class="ie"></div>
+	<div id="menu" class="noPrint"><hr />
+	<h3>Menu Principal </h3>
+	<ul>
+	 <li><a class="fonteMenu" href="#" onclick="ligaDesligaMenu(event)">Fun&ccedil;&otilde;es</a></li>
+	 <li><a class="fonteMenu" href="javascript:ExibirAjudaSiscarga()">Ajuda</a></li>
+	 <li><a class="fonteMenu" href="EfetuarLogoffCarga.do">Sair</a></li>
+	</ul>
+	</div>
+  <!-- final: menu principal -->
+	
+  <!-- inicio: rodape -->
+	
+	<hr />
+<!-- 	<div id="rodape" class="noPrint"> -->
+<!-- 	 <p>&copy; Minist&eacute;rio da Fazenda &#8212; Secretaria da Receita Federal do Brasil. Todos os direitos reservados. <a  href="javascript:AboutSiscomexCarga()">Cr&eacute;ditos</a></p> -->
+<!-- 	</div> -->
+	
+  <!-- final: rodape -->
+  
+ </div>
+</div>
+
+<script type="text/javascript">
+<!--<![CDATA[
+		
+	var domItemOld = null; // inicializacao de variaveis
+	var domMenuOld = null; // inicializacao de variaveis
+	
+	/***********************************/
+	 function toggle(itemID,menuID) {
+	/***********************************/		 
+	
+		var domItem = findDOM(itemID,0); // 0 = alterar outra propriedade do objeto, inclusive className
+		var domMenu = findDOM(menuID,1); // 1 = alterar atributo de estilo do objeto 
+		if (domItemOld) {
+			domMenuOld.display = 'none';
+			domItemOld.className = null;
+			domMenu.display = 'block';
+			domItem.className = 'over';
+			}
+			else {
+				domMenu.display = 'block';
+				domItem.className = 'over';
+		}
+		domMenuOld = domMenu;
+		domItemOld = domItem;
+		return false;
+	}		
+
+	var isDHTML = 0;
+	var isLayers = 0;
+	var isAll = 0;
+	var isID = 0;
+	
+	if (document.getElementById) {isID = 1; isDHTML = 1;} 
+	else {
+	browserVersion = parseInt(navigator.appVersion);
+	if ((navigator.appName.indexOf('Netscape') != -1) && (browserVersion == 4)) {isLayers = 1; isDHTML = 1;}
+	else {
+	if (document.all) {isAll = 1; isDHTML = 1;}
+	}}
+
+	/*****************************************/		
+	 function findDOM(objectID,withStyle) {
+	/*****************************************/
+	
+	var menuArea = "menuArea";
+		if (withStyle == 1) {
+			if (isID) { return (document.getElementById(objectID).style) ; }
+			else { 
+				if (isAll) { return (document.all[objectID].style); }
+			else {
+				if (isLayers) { return (document.layers[menuArea].layers[objectID]); }
+			};}
+		}
+		else {
+			if (isID) { return (document.getElementById(objectID)) ; }
+			else { 
+				if (isAll) { return (document.all[objectID]); }
+			else {
+				if (isLayers) { return (document.layers[menuArea].layers[objectID]); }
+			};}
+		}
+	}
+	
+	window.onLoad=toggle('menu-itens-carga','lista-itens-carga');
+		
+//<!]]>-->
+</script>		
+
+<script type="text/javascript">
+<!--<![CDATA[
+	window.onLoad=toggle('menu-itens-carga','lista-itens-carga');
+//<!]]>-->
+</script>		
+
+</body>
+</html>
+
