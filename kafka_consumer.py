@@ -4,6 +4,7 @@ from kafka import KafkaConsumer
 import httpx
 from threading import Thread
 from services import mongo_service
+import time
 
 semaphore = asyncio.Semaphore(5)
 pending_tasks = set()
@@ -47,9 +48,9 @@ def kafka_consumer_thread(loop):
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
     print("[Kafka] Consumidor iniciado, aguardando mensagens...")
-
+    time.sleep(2)
     for msg in consumer:
-        print(f"[Kafka] Mensagem recebida: {msg.value}")
+        print(f"[Kafka] Mensagem recebida: {json.dumps(msg.value, indent=2, ensure_ascii=False)}")
         if msg.value.get('status') == 'unprocessed':
             num_bl = msg.value.get('num_bl')
             if not num_bl:
