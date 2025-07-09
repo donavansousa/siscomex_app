@@ -12,7 +12,7 @@ pending_tasks = set()
 async def reprocess_get_number_bl(num_bl):
     async with semaphore:
         print(f'[⏳] Iniciando reprocessamento do BL {num_bl}')
-        saved = mongo_service.get_by_num_bl(num_bl)
+        saved = mongo_service.get_record_by_num_bl(num_bl)
 
         if int(saved['max_attempts']) <= 10:
             print(f'Aguardando 2 horas para o reprocessamento do BL {num_bl}')
@@ -62,7 +62,7 @@ def kafka_consumer_thread(loop):
             pending_tasks.add(task)
             task.add_done_callback(on_task_done)
         else:
-            print("[Kafka] Mensagem ignorada por status diferente de 'unprocessed'")
+            print("[Kafka] Mensagem processada")
 
 def main():
     loop = asyncio.new_event_loop()

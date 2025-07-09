@@ -9,37 +9,44 @@ app = Flask(__name__)
 def get_number_bl(num_bl):
 
     try:
-        saved = mongo_service.get_by_num_bl(num_bl)
+        saved = mongo_service.get_record_by_num_bl(num_bl)
         max_attempts = 1
         if(saved):
             max_attempts = saved['max_attempts'] + 1
 
         content_files = extract_service.get_content_files()
 
-        textNumbl = extract_service.extract_text("Número BL do Conhecimento de Embarque Original :", content_files)
+        textNumbl = extract_service.extract_num_bl("Número BL do Conhecimento de Embarque Original :", content_files)
 
         if textNumbl == num_bl:
             print('Leu BL no arquivos')
             
-            textCEMercante = extract_service.extract_link("No. CE-MERCANTE Master vinculado :", content_files)
+            jsonCEMercante = extract_service.extract_ce_mercante("No. CE-MERCANTE Master vinculado :", content_files)
 
-            if(not textCEMercante):
+            if(not jsonCEMercante['value']):
                 print('Não leu CE Mercante nos arquivos')
                 kafka_service.send_producer({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 'date_request': datetime.now().isoformat()})  
-                mongo_service.save({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 
+                mongo_service.save_record({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 
                                     'date_request': datetime.now().isoformat(), 'max_attempts': max_attempts})
                 
                 return jsonify({'message': 'Requisição foi recebida e salva com sucesso!'}), 200
         
             print('Leu CE Mercante nos arquivos')
 
-            kafka_service.send_producer({'num_bl': num_bl, 'status': 'processed'})   
+            print('Lendo dados nos arquivos')
 
+            data = extract_service.load_json_file(jsonCEMercante['file'])
+
+            print('Dados lidos com sucesso')
+            
+            mongo_service.save_data(data)
+
+            kafka_service.send_producer({'num_bl': num_bl, 'status': 'processed'})   
             
         else:
             print('Não leu BL nos arquivos')
             kafka_service.send_producer({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não foi encontrado ', 'date_request': datetime.now().isoformat()})    
-            mongo_service.save({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não foi encontrado ', 
+            mongo_service.save_record({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não foi encontrado ', 
                                 'date_request': datetime.now().isoformat(), 'max_attempts': max_attempts})
             
         return jsonify({'message': 'Requisição foi recebida e salva com sucesso!'}), 200
