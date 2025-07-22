@@ -12,8 +12,9 @@ def get_number_bl(num_bl):
         saved = mongo_service.get_record_by_num_bl(num_bl)
         max_attempts = 1
         if(saved):
+            print('Verificou no banco e viu que ja houve uma tentiva de leitura sem sucesso')
             max_attempts = saved['max_attempts'] + 1
-
+            
         content_files = extract_service.get_content_files()
 
         textNumbl = extract_service.extract_num_bl("Número BL do Conhecimento de Embarque Original :", content_files)
