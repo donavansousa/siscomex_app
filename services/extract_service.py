@@ -26,21 +26,35 @@ def get_content_files():
     files = open_files(filenames)
     return files
 
-def extract_num_bl(label, content_files):
+def extract_num_bl(label, content_files, num_bl):
+    files = []
     for file in content_files:
         tag = file.find("dt", string=lambda text: text and label in text)
         if tag:
-            return tag.find_next("dd").get_text(strip=True)
-    return None
+            text = tag.find_next("dd").get_text(strip=True)
+            if(text == num_bl):
+                files.append({'file': file, 'value': text})
 
-def extract_ce_mercante(label, content_files):
-    for file in content_files:
-        tag = tag = file.find("dt", string=lambda text: text and label in text)
+    return files
+
+def extract_num_bl_and_ce_mercante(label_num_bl, label_ce_mercante, content_files, num_bl):
+    list_json = extract_num_bl(label_num_bl, content_files, num_bl)
+
+    list_read = []
+    
+    if(list_json is None or len(list_json) == 0):
+        return list_read.append({ 'not_num_bl': True })
+   
+    for json in list_json:
+        tag = tag = json['file'].find("dt", string=lambda text: text and label_ce_mercante in text)
         if tag:
             value = tag.find_next("a").get_text(strip=True)
             if(value):
-                return { 'file': file, 'value': value}
-    return None
+                list_read.append({ 'file': json['file'], 'value': value, 'not_num_bl': False})
+            else:
+                print('Não leu CE Mercante no arquivo')
+    
+    return list_read
 
 def extract_numero_manifesto(file):
         link = file.find("a", href=lambda h: h and "nrManifesto=" in h)

@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from services import extract_service, kafka_service, mongo_service
 from datetime import datetime
-import time
 
 app = Flask(__name__)
     
@@ -9,40 +8,44 @@ app = Flask(__name__)
 def get_number_bl(num_bl):
 
     try:
-        saved = mongo_service.get_record_by_num_bl(num_bl)
+        saveds = list(mongo_service.get_record_by_num_bl(num_bl))
         max_attempts = 1
-        if(saved):
-            print('Verificou no banco e viu que ja houve uma tentiva de leitura sem sucesso')
-            max_attempts = saved['max_attempts'] + 1
-            
+        
+        if(saveds is not None and len(saveds) > 0):
+            for saved in saveds:
+                print('Verificou no banco e viu que ja houve uma tentiva de leitura sem sucesso')
+                max_attempts = saved['max_attempts'] + 1
+        
         content_files = extract_service.get_content_files()
 
-        textNumbl = extract_service.extract_num_bl("Número BL do Conhecimento de Embarque Original :", content_files)
-
-        if textNumbl == num_bl:
-            print('Leu BL no arquivos')
             
-            jsonCEMercante = extract_service.extract_ce_mercante("No. CE-MERCANTE Master vinculado :", content_files)
-
-            if(not jsonCEMercante['value']):
-                print('Não leu CE Mercante nos arquivos')
-                kafka_service.send_producer({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 'date_request': datetime.now().isoformat()})  
-                mongo_service.save_record({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 
-                                    'date_request': datetime.now().isoformat(), 'max_attempts': max_attempts})
-                
-                return jsonify({'message': 'Requisição foi recebida e salva com sucesso!'}), 200
+        list_json = extract_service.extract_num_bl_and_ce_mercante("Número BL do Conhecimento de Embarque Original :", "No. CE-MERCANTE Master vinculado :", content_files, num_bl)
         
-            print('Leu CE Mercante nos arquivos')
-
-            print('Lendo dados nos arquivos')
-
-            data = extract_service.load_json_file(jsonCEMercante['file'])
-
-            print('Dados lidos com sucesso')
+        if(list_json is not None and len(list_json) > 0 and not list_json[0]['not_num_bl']):
+            print('Leu BL: '+num_bl+' nos arquivos')
+            for json in list_json:
+                if(not json['value']):
+                    
+                    kafka_service.send_producer({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 'date_request': datetime.now().isoformat()})  
+                    mongo_service.save_record({'num_bl': num_bl, 'status': 'unprocessed', 'message': 'BL não contem CE Mercante ainda', 
+                                        'date_request': datetime.now().isoformat(), 'max_attempts': max_attempts})
+                    
+                    return jsonify({'message': 'Requisição foi recebida e salva com sucesso!'}), 200
             
-            mongo_service.save_data(data)
+                else:
+                    print('Leu CE Mercante: '+json['value']+' nos arquivos')
 
-            kafka_service.send_producer({'num_bl': num_bl, 'status': 'processed'})   
+                    print('Lendo dados nos arquivos')
+
+                    data = extract_service.load_json_file(json['file'])
+
+                    print('Dados lidos com sucesso')
+                    
+                    mongo_service.save_data(data)
+
+                    kafka_service.send_producer({'num_bl': num_bl, 'status': 'processed'})   
+
+                    print('----------------------------------------------')
             
         else:
             print('Não leu BL nos arquivos')

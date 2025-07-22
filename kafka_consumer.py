@@ -12,23 +12,23 @@ pending_tasks = set()
 async def reprocess_get_number_bl(num_bl):
     async with semaphore:
         print(f'[⏳] Iniciando reprocessamento do BL {num_bl}')
-        saved = mongo_service.get_record_by_num_bl(num_bl)
+        saveds = mongo_service.get_record_by_num_bl(num_bl)
+        for saved in saveds:
+            if int(saved['max_attempts']) < 10:
+                print(f'Aguardando 2 horas para o reprocessamento do BL {num_bl}')
+                await asyncio.sleep(7200)
 
-        if int(saved['max_attempts']) <= 10:
-            print(f'Aguardando 2 horas para o reprocessamento do BL {num_bl}')
-            await asyncio.sleep(7200)
+                url = f"http://127.0.0.1:5000/numbl/{num_bl}"
 
-            url = f"http://127.0.0.1:5000/numbl/{num_bl}"
+                async with httpx.AsyncClient() as client:
+                    response = await client.get(url)
 
-            async with httpx.AsyncClient() as client:
-                response = await client.get(url)
-
-                if response.status_code != 200:
-                    print(f"❌ Erro ao reprocessar o BL {num_bl}")
-                else:
-                    print(f"✅ Reprocessado o BL {num_bl}")
-        else:
-            print(f"⚠️ Número máximo de tentativas foi atingido no BL {num_bl}")
+                    if response.status_code != 200:
+                        print(f"❌ Erro ao reprocessar o BL {num_bl}")
+                    else:
+                        print(f"✅ Reprocessado o BL {num_bl}")
+            else:
+                print(f"⚠️ Número máximo de tentativas foi atingido no BL {num_bl}")
 
 def on_task_done(task):
     try:
@@ -57,12 +57,12 @@ def kafka_consumer_thread(loop):
                 print("[ERRO] Campo 'num_bl' ausente na mensagem")
                 continue
 
-            # Agenda a coroutine no loop asyncio (thread-safe)
             task = asyncio.run_coroutine_threadsafe(reprocess_get_number_bl(num_bl), loop)
             pending_tasks.add(task)
             task.add_done_callback(on_task_done)
         else:
             print("[Kafka] Mensagem processada")
+            print("--------------------------------------------")
 
 def main():
     loop = asyncio.new_event_loop()
